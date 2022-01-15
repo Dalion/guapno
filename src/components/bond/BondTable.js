@@ -25,10 +25,10 @@ const columns = [
     minWidth: 220,
   },
   {
-    field: 'faceValue',
-    headerName: 'faceValue',
+    field: 'couponQuantityPerYear',
+    headerName: 'couponQuantityPerYear',
     type: 'number',
-    minWidth: 150,
+    minWidth: 180,
   },
   {
     field: 'lot',
@@ -44,7 +44,7 @@ const columns = [
   {
     field: 'name',
     headerName: 'name',
-    minWidth: 400,
+    minWidth: 370,
   },
 ];
 
