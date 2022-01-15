@@ -8,7 +8,7 @@ export const getBonds = createAsyncThunk(
     async (token) => {
       try {
         const response = await fetchBonds(token);
-        return response?.data.instruments;
+        return response?.data?.instruments;
       } catch (error) {
         return error;
       }
@@ -34,7 +34,7 @@ const bondSlice = createSlice({
       state.responseMessage = '';
     }).addCase(getBonds.fulfilled, (state, action) => {
       state.status = LOADING_STATUSES.idle;
-      const bonds = action.payload?.payload?.instruments;
+      const bonds = action.payload;
       state.bonds = map(bonds, bond => ({id: bond?.figi, ...bond}));
       state.responseMessage = '';
     }).addCase(getBonds.rejected, (state, action) => {
