@@ -8,7 +8,7 @@ export const getBonds = createAsyncThunk(
     async (token) => {
       try {
         const response = await fetchBonds(token);
-        return response?.data;
+        return response?.data.instruments;
       } catch (error) {
         return error;
       }
