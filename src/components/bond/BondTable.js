@@ -13,46 +13,7 @@ import { useCallback, useEffect } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import { setMessage } from '../../store/message/messageSlice';
 import isEqual from 'lodash/isEqual';
-
-const columns = [
-  { field: 'figi', headerName: 'figi', minWidth: 150 },
-  { field: 'ticker', headerName: 'ticker', minWidth: 150 },
-  // { field: 'isin', headerName: 'isin', minWidth: 150 },
-  {
-    field: 'minPriceIncrement',
-    headerName: 'minPriceIncrement',
-    type: 'number',
-    minWidth: 220,
-  },
-  {
-    field: 'couponQuantityPerYear',
-    headerName: 'couponQuantityPerYear',
-    type: 'number',
-    minWidth: 220,
-  },
-  {
-    field: 'lot',
-    headerName: 'lot',
-    type: 'number',
-    minWidth: 110,
-  },
-  {
-    field: 'aciValue',
-    headerName: 'aciValue',
-    type: 'number',
-    minWidth: 150,
-  },
-  {
-    field: 'currency',
-    headerName: 'currency',
-    minWidth: 150,
-  },
-  {
-    field: 'name',
-    headerName: 'name',
-    minWidth: 370,
-  },
-];
+import { bondColumns } from './constants';
 
 function BondTable() {
   const dispatch = useDispatch();
@@ -85,7 +46,7 @@ function BondTable() {
         <BondActions />
         <DataGrid
             rows={bonds}
-            columns={columns}
+            columns={bondColumns}
             pageSize={10}
             onRowClick={onRowClick}
             getRowClassName={getRowClassName}

@@ -1,5 +1,5 @@
 import map from 'lodash/map';
-import isNumber from 'lodash/isNumber';
+import isFinite from 'lodash/isFinite';
 
 const bondMapper = (bondArr) => {
   return map(bondArr, bond => {
@@ -12,13 +12,14 @@ const bondMapper = (bondArr) => {
 };
 
 const getAciValue = (bond) => {
-  const units = bond?.aciValue?.units || '';
+  const units = parseInt(bond?.aciValue?.units, 10);
   const nano = bond?.aciValue?.nano;
-  if (isNumber(nano)) {
-    const unitsNumber = parseInt(units, 10);
-    return unitsNumber + (nano / Math.pow(10, 9));
-  } else {
-    return undefined;
+  if (isFinite(units)) {
+    if (isFinite(nano)) {
+      return units + (nano / Math.pow(10, 9));
+    } else {
+      return units;
+    }
   }
 }
 
