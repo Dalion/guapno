@@ -9,7 +9,7 @@ import classes from './BondTable.module.css';
 import { Backdrop } from '@mui/material';
 import { LOADING_STATUSES } from '../../store/bond/constants';
 import BondActions from './BondActions';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import { setMessage } from '../../store/message/messageSlice';
 import isEqual from 'lodash/isEqual';
@@ -17,7 +17,7 @@ import isEqual from 'lodash/isEqual';
 const columns = [
   { field: 'figi', headerName: 'figi', minWidth: 150 },
   { field: 'ticker', headerName: 'ticker', minWidth: 150 },
-  { field: 'isin', headerName: 'isin', minWidth: 150 },
+  // { field: 'isin', headerName: 'isin', minWidth: 150 },
   {
     field: 'minPriceIncrement',
     headerName: 'minPriceIncrement',
@@ -28,11 +28,17 @@ const columns = [
     field: 'couponQuantityPerYear',
     headerName: 'couponQuantityPerYear',
     type: 'number',
-    minWidth: 180,
+    minWidth: 220,
   },
   {
     field: 'lot',
     headerName: 'lot',
+    type: 'number',
+    minWidth: 110,
+  },
+  {
+    field: 'aciValue',
+    headerName: 'aciValue',
     type: 'number',
     minWidth: 150,
   },
@@ -48,8 +54,6 @@ const columns = [
   },
 ];
 
-const rowsPerPageOptions = [5]
-
 function BondTable() {
   const dispatch = useDispatch();
   const bonds = useSelector(selectBonds, isEqual);
@@ -62,6 +66,19 @@ function BondTable() {
     }
   }, [loadingResponseMessage]);
 
+  const onRowClick = useCallback((e) => {
+    const ticker = e?.row?.ticker;
+    if (!isEmpty(ticker)) {
+      window.open(`https://www.tinkoff.ru/invest/bonds/${ticker}/?utm_source=security_share`, '_blank');
+    }
+  }, []);
+  const getRowClassName = useCallback((e) => {
+    const ticker = e?.row?.ticker;
+    if (!isEmpty(ticker)) {
+      return 'cursor-pointer';
+    }
+  }, []);
+
   return (
       <div className={classes.container}>
         <Backdrop open={loadingStatus === LOADING_STATUSES.loading} />
@@ -70,7 +87,8 @@ function BondTable() {
             rows={bonds}
             columns={columns}
             pageSize={10}
-            rowsPerPageOptions={rowsPerPageOptions}
+            onRowClick={onRowClick}
+            getRowClassName={getRowClassName}
         />
       </div>
   );

@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 
 function BondActions() {
   const dispatch = useDispatch();
-  const [token, setToken] = useState();
+  const [token, setToken] = useState('');
 
   const onTokenInputChange = useCallback((e) => {
     setToken(e.target.value);
